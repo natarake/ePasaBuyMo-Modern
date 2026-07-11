@@ -8,14 +8,12 @@ import {
 } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useDeleteProduct, useProducts } from '../queries/productQueries';
 
 export default function ProductList() {
-  const products = useSelector((state) => state.product.products);
-  const { data: serverProducts = [] } = useProducts();
+  const { data: products = [], isLoading, isError, error } = useProducts();
   const deleteProductMutation = useDeleteProduct();
-  const rows = serverProducts.length ? serverProducts : products;
+  const rows = products;
 
   const handleDelete = (id) => {
     deleteProductMutation.mutate(id, {
@@ -81,6 +79,12 @@ export default function ProductList() {
           <button>Add +</button>
         </Link>
       </div>
+      {isLoading && <div className="mx-4 mb-2 text-sm text-gray-600">Loading products...</div>}
+      {isError && (
+        <div className="mx-4 mb-2 text-sm text-red-500">
+          Error loading products: {error?.message || 'Unknown error'}
+        </div>
+      )}
       <DataGrid
         rows={rows}
         disableSelectionOnClick
