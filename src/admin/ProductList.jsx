@@ -8,20 +8,19 @@ import {
 } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteProduct, getProducts } from '../redux/apiCalls';
+import { useSelector } from 'react-redux';
+import { useDeleteProduct, useProducts } from '../queries/productQueries';
 
 export default function ProductList() {
-  const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
-
-  useEffect(() => {
-    getProducts(dispatch);
-  }, [dispatch]);
+  const { data: serverProducts = [] } = useProducts();
+  const deleteProductMutation = useDeleteProduct();
+  const rows = serverProducts.length ? serverProducts : products;
 
   const handleDelete = (id) => {
-    deleteProduct(id, dispatch);
+    deleteProductMutation.mutate(id, {
+      onError: (error) => console.error(error),
+    });
   };
 
   const columns = [
@@ -83,7 +82,7 @@ export default function ProductList() {
         </Link>
       </div>
       <DataGrid
-        rows={products}
+        rows={rows}
         disableSelectionOnClick
         columns={columns}
         getRowId={(row) => row._id}

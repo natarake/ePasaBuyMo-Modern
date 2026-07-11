@@ -1,7 +1,7 @@
 import { publicRequest, userRequest } from '../utils/RequestMethods';
 
-export const getProductsService = async () => {
-  const { data } = await publicRequest.get('/products');
+export const getProductsService = async (category = '') => {
+  const { data } = await publicRequest.get(`/products${category ? `?category=${category}` : ''}`);
   return data;
 };
 
