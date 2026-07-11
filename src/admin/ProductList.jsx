@@ -1,16 +1,16 @@
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid } from '@material-ui/data-grid';
 import {
   FaEdit,
   FaFacebookSquare,
   FaLinkedin,
   FaTwitterSquare,
   FaInstagramSquare,
-} from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getProducts } from "../redux/apiCalls";
+} from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteProduct, getProducts } from '../redux/apiCalls';
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -25,15 +25,15 @@ export default function ProductList() {
   };
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 220 },
+    { field: '_id', headerName: 'ID', width: 220 },
     {
-      field: "name",
-      headerName: "Product Name",
+      field: 'name',
+      headerName: 'Product Name',
       width: 200,
     },
     {
-      field: "product",
-      headerName: "Product Image",
+      field: 'product',
+      headerName: 'Product Image',
       width: 200,
       renderCell: (params) => {
         return (
@@ -48,24 +48,21 @@ export default function ProductList() {
         );
       },
     },
-    { field: "inStock", headerName: "Stock", width: 200 },
+    { field: 'inStock', headerName: 'Stock', width: 200 },
     {
-      field: "price",
-      headerName: "Price",
+      field: 'price',
+      headerName: 'Price',
       width: 160,
     },
     {
-      field: "action",
-      headerName: "Action",
+      field: 'action',
+      headerName: 'Action',
       width: 150,
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/products/" + params.row._id}>
-              <FaEdit
-                size={28}
-                style={{ color: "#FFC300", cursor: "pointer" }}
-              />
+            <Link to={'/products/' + params.row._id}>
+              <FaEdit size={28} style={{ color: '#FFC300', cursor: 'pointer' }} />
             </Link>
             <MdDelete
               onClick={() => handleDelete(params.row._id)}
@@ -128,8 +125,7 @@ export default function ProductList() {
           </ul>
         </div>
         <div className="text-white text-center border-t-[1px] border-slate-500 font-thin text-xs py-2 px-4 md:font-medium md:text-base">
-          This project will not be possible without the help of Ms. Michelle
-          from KodeGo <br />
+          This project will not be possible without the help of Ms. Michelle from KodeGo <br />
           &copy; 2023 Glenn Ladrido - WD20P Student <br />
           All Rights Reserve
         </div>

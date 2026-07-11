@@ -1,29 +1,38 @@
-import { useEffect, useState } from "react";
-import ProductItems from "./ProductItems.jsx";
-import { userRequest } from "../utils/RequestMethods";
-import ReactPaginate from "react-paginate";
-import { GrNext, GrPrevious } from "react-icons/gr";
-import { BsSearch } from "react-icons/bs";
+import { useEffect, useMemo, useState } from 'react';
+import ProductItems from './ProductItems.jsx';
+import { userRequest } from '../utils/RequestMethods';
+import ReactPaginate from 'react-paginate';
+import { GrNext, GrPrevious } from 'react-icons/gr';
+import { BsSearch } from 'react-icons/bs';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
-  const [cat, setCat] = useState("");
-  const [search, setSearch] = useState("");
+  const [cat, setCat] = useState('');
+  const [search, setSearch] = useState('');
   const [pageNumber, setPageNumber] = useState(0);
   const productPerPage = 12;
-  const pagesVisited = pageNumber * productPerPage;
-  const displayUsers = products
-    .slice(pagesVisited, pagesVisited + productPerPage)
-    .map((product) => {
-      return <ProductItems product={product} key={product._id} />;
-    });
-  const pageCount = Math.ceil(products.length / productPerPage);
+
+  const pageCount = useMemo(
+    () => Math.ceil(products.length / productPerPage),
+    [products, productPerPage]
+  );
+
+  const paginatedProducts = useMemo(() => {
+    const pagesVisited = pageNumber * productPerPage;
+    return products.slice(pagesVisited, pagesVisited + productPerPage);
+  }, [pageNumber, productPerPage, products]);
+
+  const displayUsers = useMemo(
+    () => paginatedProducts.map((product) => <ProductItems product={product} key={product._id} />),
+    [paginatedProducts]
+  );
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
 
   const handleClick = (category) => {
     setCat(category);
+    setPageNumber(0);
   };
 
   const handleChange = (e) => {
@@ -35,6 +44,7 @@ const Products = () => {
     try {
       const res = await userRequest.get(`/products?category=${search}`);
       setProducts(res.data);
+      setPageNumber(0);
     } catch (err) {
       console.log(err);
     }
@@ -57,7 +67,7 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await userRequest.get("/products");
+        const res = await userRequest.get('/products');
         setProducts(res.data);
       } catch (err) {
         console.log(err);
@@ -69,14 +79,13 @@ const Products = () => {
   // reset category
 
   const handleReset = () => {
-    setCat("");
+    setCat('');
+    setPageNumber(0);
   };
 
   return (
     <div className="max-w-[1640px] m-auto px-4 py-8">
-      <h1 className="text-red-500 font-bold text-4xl text-center">
-        Best-Selling Products
-      </h1>
+      <h1 className="text-red-500 font-bold text-4xl text-center">Best-Selling Products</h1>
 
       <div className="flex flex-col justify-between items-start mt-4">
         <div className="flex-[2]">
@@ -89,25 +98,25 @@ const Products = () => {
               All
             </button>
             <button
-              onClick={() => handleClick("Grocery")}
+              onClick={() => handleClick('Grocery')}
               className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
             >
               Grocery
             </button>
             <button
-              onClick={() => handleClick("Fast Food")}
+              onClick={() => handleClick('Fast Food')}
               className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
             >
               Fast Food
             </button>
             <button
-              onClick={() => handleClick("Fashion")}
+              onClick={() => handleClick('Fashion')}
               className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
             >
               Fashion
             </button>
             <button
-              onClick={() => handleClick("Gadgets")}
+              onClick={() => handleClick('Gadgets')}
               className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
             >
               Gadgets
@@ -144,11 +153,11 @@ const Products = () => {
         nextLabel={<GrNext />}
         pageCount={pageCount}
         onPageChange={changePage}
-        containerClassName={"flex justify-center mt-8"}
-        pageClassName={"flex items-center justify-center p-0 w-[30px]"}
-        previousLinkClassName={"flex items-center p-1"}
-        nextLinkClassName={"flex items-center p-1"}
-        activeClassName={"border rounded-full bg-blue-700 text-white"}
+        containerClassName={'flex justify-center mt-8'}
+        pageClassName={'flex items-center justify-center p-0 w-[30px]'}
+        previousLinkClassName={'flex items-center p-1'}
+        nextLinkClassName={'flex items-center p-1'}
+        activeClassName={'border rounded-full bg-blue-700 text-white'}
       />
     </div>
   );

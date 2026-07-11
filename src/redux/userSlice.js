@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const initialState = {
   currentUser: null,
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     loginStart: (state) => {
@@ -24,13 +24,12 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.currentUser = null;
-      localStorage.removeItem("persist:root");
-      toast.success("User logged out successfully");
+      localStorage.removeItem('persist:root');
+      toast.success('User logged out successfully');
     },
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } =
-  userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout } = userSlice.actions;
 
 export default userSlice.reducer;

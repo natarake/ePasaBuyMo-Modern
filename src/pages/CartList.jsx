@@ -1,17 +1,17 @@
-import Navbar from "../components/Navbar";
-import { MdAdd, MdRemove } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { userRequest } from "../utils/RequestMethods";
-import StripeCheckout from "react-stripe-checkout";
-import { toast } from "react-toastify";
-import { clearCart, removeFromCart } from "../redux/cartSlice";
-import Footer from "../components/Footer";
+import Navbar from '../components/Navbar';
+import { MdAdd, MdRemove } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { userRequest } from '../utils/RequestMethods';
+import StripeCheckout from 'react-stripe-checkout';
+import { toast } from 'react-toastify';
+import { clearCart, removeFromCart } from '../redux/cartSlice';
+import Footer from '../components/Footer';
 
 const CartList = () => {
   const KEY =
-    "pk_test_51MM3KoEhgEi0nfyIYpjJU1zadGwt90LD2pL7ZKaLBwcWXC4m4eEHbjdrfmWEgrGL4nF7fLEwtZU3O6mEdFkFO8IT00Snd11oi9";
+    'pk_test_51MM3KoEhgEi0nfyIYpjJU1zadGwt90LD2pL7ZKaLBwcWXC4m4eEHbjdrfmWEgrGL4nF7fLEwtZU3O6mEdFkFO8IT00Snd11oi9';
   const cart = useSelector((state) => state.cart);
   console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
@@ -25,12 +25,12 @@ const CartList = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post("checkout/payment", {
+        const res = await userRequest.post('checkout/payment', {
           tokenId: stripeToken.id,
           amount: cart.total * 100,
         });
-        navigate("/", { data: res.data });
-        toast.success("Payment successful");
+        navigate('/', { data: res.data });
+        toast.success('Payment successful');
         dispatch(clearCart());
       } catch (err) {
         console.log(err);

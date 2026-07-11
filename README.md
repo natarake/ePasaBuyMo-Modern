@@ -36,14 +36,13 @@ One of the biggest challenges that I encountered during the development of the a
 
 Another challenge that I encountered during the development process was with deployment. I encountered a CORS error, which prevented the application from being deployed. This was a challenging problem to solve, but I was able to overcome it by carefully reviewing the code and making some modifications to the configuration files. This process taught me the importance of testing and debugging applications thoroughly before deployment, as even small errors can have significant consequences when deploying applications to a production environment.
 
-
 ## Future improvements
 
 There are several potential improvements that could be made to the ePasaBuyMo application to enhance its functionality and user experience.
 
 One potential improvement would be to add the ability for users to update their profile information. This would allow users to easily modify their personal details, such as their name, address, and contact information.
 
-Another potential improvement would be to require users to verify their email address before being able to checkout. This would help to prevent fraudulent purchases and ensure that orders are being placed by legitimate users. 
+Another potential improvement would be to require users to verify their email address before being able to checkout. This would help to prevent fraudulent purchases and ensure that orders are being placed by legitimate users.
 
 Adding cash on delivery functionality would also be a useful improvement to the application. This would allow users to pay for their orders with cash upon delivery, which can be a convenient payment option for users who do not have access to a credit card or prefer not to enter their payment information online.
 

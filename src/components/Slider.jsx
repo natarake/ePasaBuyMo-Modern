@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
-import { RxDotFilled } from "react-icons/rx";
-import { slides } from "../utils/data.js";
+import { useState } from 'react';
+import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
+import { RxDotFilled } from 'react-icons/rx';
+import { slides } from '../utils/data.js';
 
 function Slider() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,9 +31,7 @@ function Slider() {
         <div className="rounded-xl absolute top-[50%] right-[50%] translate-y-[-50%] translate-x-[50%] h-1/2 w-1/2 text-white bg-[rgba(0,0,0,0.5)]">
           <div className="flex flex-col justify-center items-center h-full text-center">
             <p className="text-2xl tracking-wide">Christmas Sales</p>
-            <p className="text-sm tracking-wide">
-              Up to 50% Discount on selected products
-            </p>
+            <p className="text-sm tracking-wide">Up to 50% Discount on selected products</p>
             <div className="mt-2 w-3/4 h-[1px] bg-white"></div>
             <button
               type="button"

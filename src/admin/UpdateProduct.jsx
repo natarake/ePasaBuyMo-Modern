@@ -1,20 +1,14 @@
-import Navbar from "../components/Navbar";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import app from "../firebase/Firebase.js";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import { updateProduct } from "../redux/apiCalls";
-import Footer from "../components/Footer";
+import Navbar from '../components/Navbar';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProduct } from '../redux/apiCalls';
+import Footer from '../components/Footer';
+import { uploadFileToStorage } from '../utils/uploadFile';
 
 export default function UpdateProduct() {
   const location = useLocation();
-  const productId = location.pathname.split("/")[2];
+  const productId = location.pathname.split('/')[2];
   const navigate = useNavigate();
 
   const product = useSelector((state) =>
@@ -29,84 +23,63 @@ export default function UpdateProduct() {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
+    const { name, value } = e.target;
+    setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCategories = (e) => {
-    setCat(e.target.value.split(","));
+    setCat(e.target.value.split(','));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const fileName = new Date().getTime() + file.name;
-    const storage = getStorage(app);
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-        }
+    if (!file) {
+      return;
+    }
+
+    uploadFileToStorage({
+      file,
+      onProgress: (progress, state) => {
+        console.log(`Upload is ${progress}% done`, state);
       },
-      (error) => {
+      onError: (error) => {
         console.log(error);
       },
-      async () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const product = {
-            ...inputs,
-            _id: id,
-            img: downloadURL,
-            categories: cat,
-          };
-          // console.log(product);
-          updateProduct(product, id, dispatch);
-          navigate("/admin");
-        });
-      }
-    );
+      onSuccess: (downloadURL) => {
+        const updatedProduct = {
+          ...inputs,
+          _id: id,
+          img: downloadURL,
+          categories: cat,
+        };
+        updateProduct(updatedProduct, id, dispatch);
+        navigate('/admin');
+      },
+    });
   };
 
   return (
     <>
       <Navbar />
       <div className="p-0 sm:p-5">
-        <h1 className="text-3xl font-extrabold text-center">
-          Product Information Update
-        </h1>
+        <h1 className="text-3xl font-extrabold text-center">Product Information Update</h1>
 
         <div className="p-5 m-5 shadow-xl flex flex-col items-center">
           <img src={product.img} alt="" />
           <div className="mt-2">
             <div className="flex flex-col sm:flex-row items-start justify-start">
               <span className="mr-4">Product Name:</span>
-              <span className="font-semibold text-sm md:text-lg">
-                {product.name}
-              </span>
+              <span className="font-semibold text-sm md:text-lg">{product.name}</span>
             </div>
             <div className="flex flex-col sm:flex-row items-start justify-start">
               <span className="mr-4">Product ID:</span>
-              <span className="font-semibold text-sm md:text-lg">
-                {product._id}
-              </span>
+              <span className="font-semibold text-sm md:text-lg">{product._id}</span>
             </div>
             <div className="flex flex-col sm:flex-row items-start justify-start">
               <span className="mr-4">In Stock:</span>
               <span className="font-semibold text-sm md:text-lg">
-                {product.inStock ? "Yes" : "No"}
+                {product.inStock ? 'Yes' : 'No'}
               </span>
             </div>
           </div>
@@ -121,7 +94,7 @@ export default function UpdateProduct() {
                   name="name"
                   onChange={handleChange}
                   className="mb-4 border-none p-1"
-                  style={{ borderBottom: "1px solid gray" }}
+                  style={{ borderBottom: '1px solid gray' }}
                   type="text"
                   id="name"
                   placeholder={product.name}
@@ -132,7 +105,7 @@ export default function UpdateProduct() {
                   name="desc"
                   onChange={handleChange}
                   className="mb-4 border-none p-1"
-                  style={{ borderBottom: "1px solid gray" }}
+                  style={{ borderBottom: '1px solid gray' }}
                   type="text"
                   id="desc"
                   placeholder={product.desc}
@@ -143,7 +116,7 @@ export default function UpdateProduct() {
                   name="price"
                   onChange={handleChange}
                   className="mb-4 border-none p-1"
-                  style={{ borderBottom: "1px solid gray" }}
+                  style={{ borderBottom: '1px solid gray' }}
                   type="text"
                   id="price"
                   placeholder={product.price}
@@ -152,7 +125,7 @@ export default function UpdateProduct() {
                 <label htmlFor="category">Category</label>
                 <input
                   className="mb-4 border-none p-1"
-                  style={{ borderBottom: "1px solid gray" }}
+                  style={{ borderBottom: '1px solid gray' }}
                   type="text"
                   id="category"
                   placeholder={product.categories}
@@ -162,7 +135,7 @@ export default function UpdateProduct() {
                 <label htmlFor="inStock">In Stock</label>
                 <select
                   className="border-none p-1"
-                  style={{ borderBottom: "1px solid gray" }}
+                  style={{ borderBottom: '1px solid gray' }}
                   name="inStock"
                   id="inStock"
                   onChange={handleChange}
@@ -174,22 +147,15 @@ export default function UpdateProduct() {
             </div>
             <div className="flex flex-col md:flex-col justify-around items-center flex-1">
               <div className="flex flex-col items-center mb-2">
-                <img
-                  src={product.img}
-                  alt=""
-                  className="object-cover mr-5 mb-2"
-                />
-                <label
-                  className="cursor-pointer underline italic"
-                  htmlFor="file"
-                >
+                <img src={product.img} alt="" className="object-cover mr-5 mb-2" />
+                <label className="cursor-pointer underline italic" htmlFor="file">
                   Update Product Image
                 </label>
                 <input
                   type="file"
                   id="file"
                   onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: "none" }}
+                  style={{ display: 'none' }}
                 />
               </div>
               <button

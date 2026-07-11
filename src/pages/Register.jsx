@@ -1,18 +1,18 @@
-import { Link } from "react-router-dom";
-import loginImg from "../assets/login.jpg";
-import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
-import { publicRequest } from "../utils/RequestMethods";
-import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import loginImg from '../assets/login.jpg';
+import { FcGoogle } from 'react-icons/fc';
+import { useState } from 'react';
+import { publicRequest } from '../utils/RequestMethods';
+import { useSelector } from 'react-redux';
 
-import { auth, provider } from "../firebase/Firebase";
-import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from '../firebase/Firebase';
+import { signInWithPopup } from 'firebase/auth';
 
 const Register = () => {
   const [inputs, setInputs] = useState({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: '',
   });
   const { error } = useSelector((state) => state.user);
 
@@ -24,7 +24,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await publicRequest.post("auth/register", inputs);
+      await publicRequest.post('auth/register', inputs);
     } catch (err) {
       console.log(err);
     }
@@ -35,7 +35,7 @@ const Register = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const email = result.user.email;
-        localStorage.setItem("email", email);
+        localStorage.setItem('email', email);
       })
       .catch((err) => {
         console.log(err);
@@ -82,9 +82,7 @@ const Register = () => {
             </button>
             <div className="flex items-center justify-center relative py-2">
               <div className="w-1/2 h-[1px] bg-black"></div>
-              <p className="text-center text-xs text-gray-500 absolute bg-slate-100 px-1">
-                OR
-              </p>
+              <p className="text-center text-xs text-gray-500 absolute bg-slate-100 px-1">OR</p>
             </div>
             <button
               onClick={signInWithGoogle}
@@ -97,10 +95,7 @@ const Register = () => {
 
           <p className="text-xs font-thin text-[#060606]">
             Already have an account?
-            <Link
-              to="/login"
-              className="text-blue-400 ml-1 underline underline-offset-2 italic"
-            >
+            <Link to="/login" className="text-blue-400 ml-1 underline underline-offset-2 italic">
               Sign in.
             </Link>
           </p>

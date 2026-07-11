@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { FaShoppingCart } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../redux/userSlice";
+import { useState } from 'react';
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { FaShoppingCart } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../redux/userSlice';
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -19,7 +19,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate('/login');
   };
 
   return (
@@ -73,8 +73,8 @@ const Navbar = () => {
           <ul
             className={
               nav
-                ? "z-10 fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-600 bg-[#060606f9] ease-in-out duration-500"
-                : "ease-in-out duration-500 fixed left-[-100%]"
+                ? 'z-10 fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-600 bg-[#060606f9] ease-in-out duration-500'
+                : 'ease-in-out duration-500 fixed left-[-100%]'
             }
           >
             <Link to="/">

@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
-import loginImg from "../assets/login.jpg";
-import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/apiCalls";
+import { Link } from 'react-router-dom';
+import loginImg from '../assets/login.jpg';
+import { FcGoogle } from 'react-icons/fc';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/apiCalls';
 
-import { auth, provider } from "../firebase/Firebase";
-import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from '../firebase/Firebase';
+import { signInWithPopup } from 'firebase/auth';
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
 
@@ -23,7 +23,7 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const email = result.user.email;
-        localStorage.setItem("email", email);
+        localStorage.setItem('email', email);
       })
       .catch((err) => {
         console.log(err);
@@ -65,9 +65,7 @@ const Login = () => {
             {error && <p className="text-red-500">Something went wrong...</p>}
             <div className="flex items-center justify-center relative py-2">
               <div className="w-1/2 h-[1px] bg-black"></div>
-              <p className="text-center text-xs text-gray-500 absolute bg-slate-100 px-1">
-                OR
-              </p>
+              <p className="text-center text-xs text-gray-500 absolute bg-slate-100 px-1">OR</p>
             </div>
             <button
               onClick={signInWithGoogle}
@@ -80,10 +78,7 @@ const Login = () => {
 
           <p className="text-xs font-thin text-[#060606]">
             Don't have an account?
-            <Link
-              to="/register"
-              className="text-blue-400 ml-1 underline underline-offset-2 italic"
-            >
+            <Link to="/register" className="text-blue-400 ml-1 underline underline-offset-2 italic">
               Sign up for free.
             </Link>
           </p>

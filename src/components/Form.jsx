@@ -8,7 +8,7 @@ const Form = ({ inputs, handleChange, handleSubmit, setFile }) => {
           placeholder="First Name"
           type="text"
           required
-          value={inputs.firstName || ""}
+          value={inputs.firstName || ''}
           onChange={handleChange}
         />
         <input
@@ -17,7 +17,7 @@ const Form = ({ inputs, handleChange, handleSubmit, setFile }) => {
           type="text"
           required
           placeholder="Last Name"
-          value={inputs.lastName || ""}
+          value={inputs.lastName || ''}
           onChange={handleChange}
         />
         <input
@@ -26,7 +26,7 @@ const Form = ({ inputs, handleChange, handleSubmit, setFile }) => {
           type="email"
           required
           placeholder="Email"
-          value={inputs.email || ""}
+          value={inputs.email || ''}
           onChange={handleChange}
         />
         <input
@@ -35,7 +35,7 @@ const Form = ({ inputs, handleChange, handleSubmit, setFile }) => {
           type="tel"
           required
           placeholder="Phone"
-          value={inputs.phone || ""}
+          value={inputs.phone || ''}
           onChange={handleChange}
         />
         <input
@@ -44,7 +44,7 @@ const Form = ({ inputs, handleChange, handleSubmit, setFile }) => {
           placeholder="Address"
           type="text"
           required
-          value={inputs.address || ""}
+          value={inputs.address || ''}
           onChange={handleChange}
         />
         <input

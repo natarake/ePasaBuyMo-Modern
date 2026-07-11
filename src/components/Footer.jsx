@@ -1,9 +1,4 @@
-import {
-  FaFacebookSquare,
-  FaLinkedin,
-  FaTwitterSquare,
-  FaInstagramSquare,
-} from "react-icons/fa";
+import { FaFacebookSquare, FaLinkedin, FaTwitterSquare, FaInstagramSquare } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -41,8 +36,7 @@ const Footer = () => {
         </ul>
       </div>
       <div className="text-white text-center border-t-[1px] border-slate-500 font-thin text-xs py-2 px-4 md:font-medium md:text-base">
-        This project will not be possible without the help of Ms. Michelle from
-        KodeGo <br />
+        This project will not be possible without the help of Ms. Michelle from KodeGo <br />
         &copy; 2023 Glenn Ladrido - WD20P Student <br />
         All Rights Reserve
       </div>

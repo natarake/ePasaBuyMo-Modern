@@ -1,21 +1,14 @@
-import { useState } from "react";
-import Footer from "../components/Footer";
-import Form from "../components/Form";
-import Navbar from "../components/Navbar";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import app from "../firebase/Firebase";
-import { userRequest } from "../utils/RequestMethods";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import Footer from '../components/Footer';
+import Form from '../components/Form';
+import Navbar from '../components/Navbar';
+import { userRequest } from '../utils/RequestMethods';
+import { toast } from 'react-toastify';
+import { uploadFileToStorage } from '../utils/uploadFile';
 
 const Request = () => {
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
-  console.log(inputs, file);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -25,47 +18,30 @@ const Request = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const fileName = new Date().getTime() + file.name;
-    const storage = getStorage(app);
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-        }
+    if (!file) {
+      return;
+    }
+
+    uploadFileToStorage({
+      file,
+      onProgress: (progress, state) => {
+        console.log(`Upload is ${progress}% done`, state);
       },
-      (error) => {
-        // Handle unsuccessful uploads
+      onError: () => {
+        toast.error('Upload failed. Please try again.');
       },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const request = { ...inputs, img: downloadURL };
-          console.log(request);
-          userRequest.post("request", request);
-          toast.success("Request sent successfully");
-        });
-      }
-    );
+      onSuccess: (downloadURL) => {
+        const request = { ...inputs, img: downloadURL };
+        userRequest.post('request', request);
+        toast.success('Request sent successfully');
+      },
+    });
   };
   return (
     <>
       <Navbar />
-      <div
-        id="contact"
-        className="max-w-[1140px] m-auto w-full min-h-[85vh] p-4 py-16"
-      >
+      <div id="contact" className="max-w-[1140px] m-auto w-full min-h-[85vh] p-4 py-16">
         <h1 className="text-center text-gray-700 font-extrabold text-xl">
           Have a specific product in mind?
         </h1>

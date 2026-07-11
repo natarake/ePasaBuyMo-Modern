@@ -1,23 +1,29 @@
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../redux/cartSlice";
-import { MdAdd, MdRemove } from "react-icons/md";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { FaShoppingCart } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/cartSlice';
+import { MdAdd, MdRemove } from 'react-icons/md';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { FaShoppingCart } from 'react-icons/fa';
 
 const ProductItems = ({ product }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantity = (type) => {
-    if (type === "dec") {
-      quantity > 1 && setQuantity(quantity - 1);
-      toast.info("Quantity decreased");
-    } else {
-      setQuantity(quantity + 1);
-      toast.info("Quantity increased");
-    }
+    setQuantity((prevQuantity) => {
+      if (type === 'dec') {
+        if (prevQuantity <= 1) {
+          toast.info('Quantity cannot be less than 1');
+          return prevQuantity;
+        }
+        toast.info('Quantity decreased');
+        return prevQuantity - 1;
+      }
+
+      toast.info('Quantity increased');
+      return prevQuantity + 1;
+    });
   };
 
   const handleClick = () => {
@@ -35,16 +41,14 @@ const ProductItems = ({ product }) => {
       <div className="flex items-center justify-between gap-1 px-2 py-4 ">
         <div className="flex items-center gap-1">
           <p className="font-bold text-sm">{product.name}</p>
-          <span className="text-xs bg-slate-300 rounded-full p-1">
-            ₱{product.price}
-          </span>
+          <span className="text-xs bg-slate-300 rounded-full p-1">₱{product.price}</span>
         </div>
         <div className="flex items-center justify-center p-0">
-          <MdRemove onClick={() => handleQuantity("dec")} size="16" />
+          <MdRemove onClick={() => handleQuantity('dec')} size="16" />
           <span className="w-4 h-4 rounded-full bg-slate-200 border-[1px] text-xs border-solid border-slate-500 flex items-center justify-center m-2">
             {quantity}
           </span>
-          <MdAdd onClick={() => handleQuantity("inc")} size="16" />
+          <MdAdd onClick={() => handleQuantity('inc')} size="16" />
         </div>
         <button
           onClick={handleClick}
