@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import ProductItems from './ProductItems.jsx';
-import { userRequest } from '../utils/RequestMethods';
 import ReactPaginate from 'react-paginate';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import { BsSearch } from 'react-icons/bs';
+import { useProducts } from '../queries/productQueries';
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
   const [cat, setCat] = useState('');
   const [search, setSearch] = useState('');
   const [pageNumber, setPageNumber] = useState(0);
   const productPerPage = 12;
+  const { data: products = [], isLoading, isError, error } = useProducts(cat);
 
   const pageCount = useMemo(
     () => Math.ceil(products.length / productPerPage),
@@ -39,42 +39,11 @@ const Products = () => {
     setSearch(e.target.value);
   };
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
-    try {
-      const res = await userRequest.get(`/products?category=${search}`);
-      setProducts(res.data);
-      setPageNumber(0);
-    } catch (err) {
-      console.log(err);
-    }
+    setCat(search);
+    setPageNumber(0);
   };
-
-  // filter by category
-  useEffect(() => {
-    const filterByCategory = async () => {
-      try {
-        const res = await userRequest.get(`/products?category=${cat}`);
-        setProducts(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    filterByCategory();
-  }, [cat]);
-
-  // get products from backend server
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await userRequest.get('/products');
-        setProducts(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getProducts();
-  }, []);
 
   // reset category
 
@@ -141,13 +110,17 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Display foods */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4">
-        {/* {products.map((product) => (
-          <ProductItems product={product} key={product._id} />
-        ))} */}
-        {displayUsers}
-      </div>
+      {isLoading && <p className="text-center text-gray-600 mt-8">Loading products...</p>}
+      {isError && (
+        <p className="text-center text-red-500 mt-8">
+          {error?.message || 'Failed to load products.'}
+        </p>
+      )}
+      {!isLoading && !isError && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4">
+          {displayUsers}
+        </div>
+      )}
       <ReactPaginate
         previousLabel={<GrPrevious />}
         nextLabel={<GrNext />}

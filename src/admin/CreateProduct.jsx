@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import { addProduct } from '../redux/apiCalls';
-import { useDispatch } from 'react-redux';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { uploadFileToStorage } from '../utils/uploadFile';
+import { useCreateProduct } from '../queries/productQueries';
 
 const CreateProduct = () => {
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState([]);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const createProductMutation = useCreateProduct();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,8 +38,10 @@ const CreateProduct = () => {
       },
       onSuccess: (downloadURL) => {
         const product = { ...inputs, img: downloadURL, categories: cat };
-        addProduct(product, dispatch);
-        navigate('/admin');
+        createProductMutation.mutate(product, {
+          onSuccess: () => navigate('/admin'),
+          onError: (error) => console.error(error),
+        });
       },
     });
   };
@@ -111,9 +112,10 @@ const CreateProduct = () => {
           </div>
           <button
             onClick={handleSubmit}
-            className="w-1/4 border-none p-2 rounded-lg bg-blue-700 text-white font-semibold cursor-pointer mt-2"
+            disabled={createProductMutation.isPending}
+            className="w-1/4 border-none p-2 rounded-lg bg-blue-700 text-white font-semibold cursor-pointer mt-2 disabled:opacity-70"
           >
-            Create
+            {createProductMutation.isPending ? 'Creating...' : 'Create'}
           </button>
         </form>
       </div>

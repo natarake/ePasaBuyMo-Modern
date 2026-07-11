@@ -1,10 +1,10 @@
 import Navbar from '../components/Navbar';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateProduct } from '../redux/apiCalls';
+import { useSelector } from 'react-redux';
 import Footer from '../components/Footer';
 import { uploadFileToStorage } from '../utils/uploadFile';
+import { useUpdateProduct } from '../queries/productQueries';
 
 export default function UpdateProduct() {
   const location = useLocation();
@@ -20,7 +20,7 @@ export default function UpdateProduct() {
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState([]);
-  const dispatch = useDispatch();
+  const updateProductMutation = useUpdateProduct();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,8 +53,13 @@ export default function UpdateProduct() {
           img: downloadURL,
           categories: cat,
         };
-        updateProduct(updatedProduct, id, dispatch);
-        navigate('/admin');
+        updateProductMutation.mutate(
+          { id, product: updatedProduct },
+          {
+            onSuccess: () => navigate('/admin'),
+            onError: (error) => console.error(error),
+          }
+        );
       },
     });
   };
@@ -160,9 +165,10 @@ export default function UpdateProduct() {
               </div>
               <button
                 onClick={handleSubmit}
-                className="w-1/2 border-none p-2 rounded-lg bg-blue-700 text-white font-semibold cursor-pointer "
+                disabled={updateProductMutation.isPending}
+                className="w-1/2 border-none p-2 rounded-lg bg-blue-700 text-white font-semibold cursor-pointer disabled:opacity-70"
               >
-                Update
+                {updateProductMutation.isPending ? 'Updating...' : 'Update'}
               </button>
             </div>
           </form>
