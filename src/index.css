@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  html {
+    font-family: "Rubik", sans-serif;
+  }
+
+  button {
+    @apply border border-black rounded-xl px-5 py-1;
+  }
+}
