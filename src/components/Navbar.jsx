@@ -11,7 +11,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.currentUser);
   const quantity = useSelector((state) => state.cart.quantity);
-  const isAdmin = user.isAdmin;
+  const isAdmin = user?.isAdmin || false;
 
   const handleNav = () => {
     setNav(!nav);

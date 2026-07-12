@@ -10,8 +10,7 @@ import { clearCart, removeFromCart } from '../redux/cartSlice';
 import Footer from '../components/Footer';
 
 const CartList = () => {
-  const KEY =
-    'pk_test_51MM3KoEhgEi0nfyIYpjJU1zadGwt90LD2pL7ZKaLBwcWXC4m4eEHbjdrfmWEgrGL4nF7fLEwtZU3O6mEdFkFO8IT00Snd11oi9';
+  const KEY = process.env.REACT_APP_STRIPE;
   const cart = useSelector((state) => state.cart);
   console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
@@ -39,8 +38,8 @@ const CartList = () => {
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, navigate, dispatch]);
 
-  const handleRemove = () => {
-    dispatch(removeFromCart());
+  const handleRemove = (id) => {
+    dispatch(removeFromCart(id));
   };
 
   return (
@@ -82,7 +81,7 @@ const CartList = () => {
                         </div>
                       </div>
                       <button
-                        onClick={handleRemove}
+                        onClick={() => handleRemove(product._id)}
                         className="w-1/2 py-2 px-4 text-[#060606] font-semibold"
                       >
                         Remove

@@ -1,13 +1,13 @@
 import { loginFailure, loginStart, loginSuccess } from './userSlice';
-import { publicRequest } from '../utils/RequestMethods';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { loginService } from '../services/authService';
 
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
-    const res = await publicRequest.post('/auth/login', user);
-    dispatch(loginSuccess(res.data));
+    const data = await loginService(user);
+    dispatch(loginSuccess(data));
     toast.success('Successfully logged in');
   } catch (err) {
     dispatch(loginFailure());
