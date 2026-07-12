@@ -3,8 +3,8 @@ import { MdAdd, MdRemove } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { userRequest } from '../utils/RequestMethods';
 import StripeCheckout from 'react-stripe-checkout';
+import { processPaymentService } from '../services/checkoutService';
 import { toast } from 'react-toastify';
 import { clearCart, removeFromCart } from '../redux/cartSlice';
 import Footer from '../components/Footer';
@@ -24,11 +24,8 @@ const CartList = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post('checkout/payment', {
-          tokenId: stripeToken.id,
-          amount: cart.total * 100,
-        });
-        navigate('/', { data: res.data });
+        const data = await processPaymentService(stripeToken.id, cart.total * 100);
+        navigate('/', { data });
         toast.success('Payment successful');
         dispatch(clearCart());
       } catch (err) {
