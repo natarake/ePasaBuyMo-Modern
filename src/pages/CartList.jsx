@@ -30,6 +30,7 @@ const CartList = () => {
         dispatch(clearCart());
       } catch (err) {
         console.log(err);
+        toast.error('Payment could not be processed. Please try again.');
       }
     };
     stripeToken && makeRequest();
