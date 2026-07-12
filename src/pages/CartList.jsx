@@ -3,15 +3,14 @@ import { MdAdd, MdRemove } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { userRequest } from '../utils/RequestMethods';
 import StripeCheckout from 'react-stripe-checkout';
+import { processPaymentService } from '../services/checkoutService';
 import { toast } from 'react-toastify';
 import { clearCart, removeFromCart } from '../redux/cartSlice';
 import Footer from '../components/Footer';
 
 const CartList = () => {
-  const KEY =
-    'pk_test_51MM3KoEhgEi0nfyIYpjJU1zadGwt90LD2pL7ZKaLBwcWXC4m4eEHbjdrfmWEgrGL4nF7fLEwtZU3O6mEdFkFO8IT00Snd11oi9';
+  const KEY = process.env.REACT_APP_STRIPE;
   const cart = useSelector((state) => state.cart);
   console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
@@ -25,11 +24,8 @@ const CartList = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post('checkout/payment', {
-          tokenId: stripeToken.id,
-          amount: cart.total * 100,
-        });
-        navigate('/', { data: res.data });
+        const data = await processPaymentService(stripeToken.id, cart.total * 100);
+        navigate('/', { data });
         toast.success('Payment successful');
         dispatch(clearCart());
       } catch (err) {
@@ -39,8 +35,8 @@ const CartList = () => {
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, navigate, dispatch]);
 
-  const handleRemove = () => {
-    dispatch(removeFromCart());
+  const handleRemove = (id) => {
+    dispatch(removeFromCart(id));
   };
 
   return (
@@ -82,7 +78,7 @@ const CartList = () => {
                         </div>
                       </div>
                       <button
-                        onClick={handleRemove}
+                        onClick={() => handleRemove(product._id)}
                         className="w-1/2 py-2 px-4 text-[#060606] font-semibold"
                       >
                         Remove

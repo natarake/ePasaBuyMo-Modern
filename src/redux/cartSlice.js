@@ -23,13 +23,9 @@ export const cartSlice = createSlice({
       state.total = 0;
     },
     removeFromCart: (state, action) => {
-      let itemToRemove = {};
-      const index = state.products.findIndex((item) => {
-        if (item.id === action.payload) {
-          itemToRemove = item;
-        }
-        return true;
-      });
+      const index = state.products.findIndex((item) => item._id === action.payload);
+      if (index === -1) return;
+      const itemToRemove = state.products[index];
       state.products.splice(index, 1);
       state.quantity -= 1;
       state.total -= itemToRemove.price * itemToRemove.quantity;

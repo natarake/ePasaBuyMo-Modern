@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom';
 import loginImg from '../assets/login.jpg';
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
-import { publicRequest } from '../utils/RequestMethods';
 import { useSelector } from 'react-redux';
 
 import { auth, provider } from '../firebase/Firebase';
 import { signInWithPopup } from 'firebase/auth';
+import { registerService } from '../services/authService';
 
 const Register = () => {
   const [inputs, setInputs] = useState({
@@ -24,7 +24,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await publicRequest.post('auth/register', inputs);
+      await registerService(inputs);
     } catch (err) {
       console.log(err);
     }

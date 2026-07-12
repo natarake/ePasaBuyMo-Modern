@@ -2,9 +2,9 @@ import { useState } from 'react';
 import Footer from '../components/Footer';
 import Form from '../components/Form';
 import Navbar from '../components/Navbar';
-import { userRequest } from '../utils/RequestMethods';
 import { toast } from 'react-toastify';
 import { uploadFileToStorage } from '../utils/uploadFile';
+import { submitRequestService } from '../services/requestService';
 
 const Request = () => {
   const [inputs, setInputs] = useState({});
@@ -31,10 +31,15 @@ const Request = () => {
       onError: () => {
         toast.error('Upload failed. Please try again.');
       },
-      onSuccess: (downloadURL) => {
+      onSuccess: async (downloadURL) => {
         const request = { ...inputs, img: downloadURL };
-        userRequest.post('request', request);
-        toast.success('Request sent successfully');
+        try {
+          await submitRequestService(request);
+          toast.success('Request sent successfully');
+        } catch (error) {
+          console.log(error);
+          toast.error('Request failed. Please try again.');
+        }
       },
     });
   };
