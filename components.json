@@ -1,0 +1,8 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "aliases": {
+    "components": "@/components/ui",
+    "utils": "@/lib/utils"
+  },
+  "version": 1
+}
