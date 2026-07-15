@@ -10,7 +10,7 @@ import { clearCart, removeFromCart } from '../redux/cartSlice';
 import Footer from '../components/Footer';
 
 const CartList = () => {
-  const KEY = process.env.REACT_APP_STRIPE;
+  const KEY = import.meta.env.VITE_STRIPE;
   const cart = useSelector((state) => state.cart);
   console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
