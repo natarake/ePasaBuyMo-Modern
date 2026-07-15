@@ -77,7 +77,7 @@ const Login = () => {
           </div>
 
           <p className="text-xs font-thin text-[#060606]">
-            Don't have an account?
+            {"Don't have an account?"}
             <Link to="/register" className="text-blue-400 ml-1 underline underline-offset-2 italic">
               Sign up for free.
             </Link>
