@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { uploadFileToStorage } from '../utils/uploadFile';
 import { useProduct, useUpdateProduct } from '../queries/productQueries';
+import { Button } from '../components/ui/button';
 
 export default function UpdateProduct() {
   const location = useLocation();
@@ -171,13 +172,12 @@ export default function UpdateProduct() {
                     style={{ display: 'none' }}
                   />
                 </div>
-                <button
+                <Button
                   onClick={handleSubmit}
                   disabled={updateProductMutation.isPending}
-                  className="w-1/2 border-none p-2 rounded-lg bg-blue-700 text-white font-semibold cursor-pointer disabled:opacity-70"
                 >
                   {updateProductMutation.isPending ? 'Updating...' : 'Update'}
-                </button>
+                </Button>
               </div>
             </form>
           </div>

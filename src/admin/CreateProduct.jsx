@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { uploadFileToStorage } from '../utils/uploadFile';
 import { useCreateProduct } from '../queries/productQueries';
+import { Button } from '../components/ui/button';
 
 const CreateProduct = () => {
   const [inputs, setInputs] = useState({});
@@ -110,13 +111,13 @@ const CreateProduct = () => {
               <option value="false">No</option>
             </select>
           </div>
-          <button
+          <Button
             onClick={handleSubmit}
             disabled={createProductMutation.isPending}
-            className="w-1/4 border-none p-2 rounded-lg bg-blue-700 text-white font-semibold cursor-pointer mt-2 disabled:opacity-70"
+            className="mt-2"
           >
             {createProductMutation.isPending ? 'Creating...' : 'Create'}
-          </button>
+          </Button>
         </form>
       </div>
       <Footer />

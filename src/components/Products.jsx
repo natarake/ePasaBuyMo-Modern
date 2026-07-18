@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import { BsSearch } from 'react-icons/bs';
 import { useProducts } from '../queries/productQueries';
+import { Button } from './ui/button';
 
 const Products = () => {
   const [cat, setCat] = useState('');
@@ -60,36 +61,41 @@ const Products = () => {
         <div className="flex-[2]">
           <p className="font-bold text-gray-700">Filter by Category</p>
           <div className="flex justfiy-between flex-wrap pt-2">
-            <button
+            <Button
               onClick={handleReset}
-              className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+              variant="outline"
+              size="sm"
             >
               All
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => handleClick('Grocery')}
-              className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+              variant="outline"
+              size="sm"
             >
               Grocery
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => handleClick('Fast Food')}
-              className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+              variant="outline"
+              size="sm"
             >
               Fast Food
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => handleClick('Fashion')}
-              className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+              variant="outline"
+              size="sm"
             >
               Fashion
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => handleClick('Gadgets')}
-              className="m-1 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+              variant="outline"
+              size="sm"
             >
               Gadgets
-            </button>
+            </Button>
           </div>
         </div>
         <div className="flex-1 relative mt-4">

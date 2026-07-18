@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import Footer from '../components/Footer';
 import { GrPrevious } from 'react-icons/gr';
 import { useProduct } from '../queries/productQueries';
+import { Button } from '../components/ui/button';
 
 const SingleProduct = () => {
   const location = useLocation();
@@ -67,12 +68,9 @@ const SingleProduct = () => {
                 </div>
               </div>
               <div className="flex items-center justify-start sm:items-start">
-                <button
-                  onClick={handleClick}
-                  className="py-2 mt-2 mb-4 border-none bg-red-500 text-white font-medium"
-                >
+                <Button onClick={handleClick} variant="default" size="lg">
                   ADD TO CART
-                </button>
+                </Button>
               </div>
               <Link to="/">
                 <div className="flex gap-2 items-center my-4 underline underline-offset-2">

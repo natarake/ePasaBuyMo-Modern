@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { auth, provider } from '../firebase/Firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { registerService } from '../services/authService';
+import { Button } from '../components/ui/button';
 
 const Register = () => {
   const [inputs, setInputs] = useState({
@@ -74,23 +75,22 @@ const Register = () => {
               className="w-full border-b border-[#060606] bg-transparent py-2 my-2 outline-none focus:outline-none"
             />
             {error && <p className="text-red-500">Something went wrong...</p>}
-            <button
-              onClick={handleSubmit}
-              className="w-full bg-[#060606] text-white rounded-lg p-1 my-3"
-            >
+            <Button onClick={handleSubmit} className="w-full" size="lg">
               Register
-            </button>
+            </Button>
             <div className="flex items-center justify-center relative py-2">
               <div className="w-1/2 h-[1px] bg-black"></div>
               <p className="text-center text-xs text-gray-500 absolute bg-slate-100 px-1">OR</p>
             </div>
-            <button
+            <Button
               onClick={signInWithGoogle}
-              className="flex items-center justify-center w-full bg-white text-[#de5246] rounded-lg p-1 my-3 border-[1px] border-[#de5246] "
+              variant="outline"
+              className="w-full"
+              size="lg"
             >
               <FcGoogle className="mr-2" />
               Sign Up with Google
-            </button>
+            </Button>
           </div>
 
           <p className="text-xs font-thin text-[#060606]">

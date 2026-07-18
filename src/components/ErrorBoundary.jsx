@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Button } from './ui/button';
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -27,12 +28,9 @@ class ErrorBoundary extends Component {
             <p className="text-gray-600 mb-6">
               An unexpected error occurred. Please reload the application to continue.
             </p>
-            <button
-              onClick={this.handleReload}
-              className="px-6 py-3 bg-[#060606] text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
-            >
+            <Button onClick={this.handleReload} size="lg">
               Reload Application
-            </button>
+            </Button>
           </div>
         </div>
       );

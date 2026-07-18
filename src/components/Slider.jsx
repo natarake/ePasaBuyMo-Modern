@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import { slides } from '../utils/data.js';
+import { Button } from './ui/button';
 
 function Slider() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,12 +34,9 @@ function Slider() {
             <p className="text-2xl tracking-wide">Christmas Sales</p>
             <p className="text-sm tracking-wide">Up to 50% Discount on selected products</p>
             <div className="mt-2 w-3/4 h-[1px] bg-white"></div>
-            <button
-              type="button"
-              className="border-none tracking-wide text-white bg-red-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 my-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
+            <Button type="button" variant="default" size="lg" className="rounded-full">
               Shop Now
-            </button>
+            </Button>
           </div>
         </div>
       </div>

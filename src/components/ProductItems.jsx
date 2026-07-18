@@ -5,6 +5,7 @@ import { MdAdd, MdRemove } from 'react-icons/md';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { FaShoppingCart } from 'react-icons/fa';
+import { Button } from './ui/button';
 
 const ProductItems = ({ product }) => {
   const dispatch = useDispatch();
@@ -50,12 +51,9 @@ const ProductItems = ({ product }) => {
           </span>
           <MdAdd onClick={() => handleQuantity('inc')} size="16" />
         </div>
-        <button
-          onClick={handleClick}
-          className="border-none bg-red-600 text-white p-2 rounded-full"
-        >
+        <Button onClick={handleClick} variant="default" size="icon" className="rounded-full bg-brand-red">
           <FaShoppingCart size={20} />
-        </button>
+        </Button>
       </div>
     </div>
   );

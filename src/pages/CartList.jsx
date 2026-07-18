@@ -7,6 +7,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { processPaymentService } from '../services/checkoutService';
 import { toast } from 'react-toastify';
 import { clearCart, removeFromCart } from '../redux/cartSlice';
+import { Button } from '../components/ui/button';
 import Footer from '../components/Footer';
 
 const CartList = () => {
@@ -78,12 +79,13 @@ const CartList = () => {
                           <MdAdd size="24" />
                         </div>
                       </div>
-                      <button
+                      <Button
                         onClick={() => handleRemove(product._id)}
-                        className="w-1/2 py-2 px-4 text-[#060606] font-semibold"
+                        variant="ghost"
+                        className="w-1/2"
                       >
                         Remove
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -116,9 +118,9 @@ const CartList = () => {
               token={onToken}
               stripeKey={KEY}
             >
-              <button className="w-full py-2 px-4 bg-[#060606] text-white font-semibold">
+              <Button className="w-full" size="lg">
                 CHECKOUT
-              </button>
+              </Button>
             </StripeCheckout>
           </div>
         </div>

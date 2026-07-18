@@ -1,3 +1,5 @@
+import { Button } from './ui/button';
+
 const Form = ({ inputs, handleChange, handleSubmit, setFile }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -59,7 +61,9 @@ const Form = ({ inputs, handleChange, handleSubmit, setFile }) => {
         >
           Upload Image of Requested Product
         </label>
-        <button className="col-span-2 m-2">Submit</button>
+        <Button type="submit" className="col-span-2 m-2" size="lg">
+          Submit
+        </Button>
       </div>
     </form>
   );

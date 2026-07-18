@@ -4,6 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/apiCalls';
+import { Button } from '../components/ui/button';
 
 import { auth, provider } from '../firebase/Firebase';
 import { signInWithPopup } from 'firebase/auth';
@@ -55,25 +56,28 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border-b border-[#060606] bg-transparent py-2 my-2 outline-none focus:outline-none"
             />
-            <button
+            <Button
               onClick={handleSubmit}
               disabled={isFetching}
-              className="w-full bg-[#060606] text-white rounded-lg p-1 my-3"
+              className="w-full"
+              size="lg"
             >
               Log In
-            </button>
+            </Button>
             {error && <p className="text-red-500">Something went wrong...</p>}
             <div className="flex items-center justify-center relative py-2">
               <div className="w-1/2 h-[1px] bg-black"></div>
               <p className="text-center text-xs text-gray-500 absolute bg-slate-100 px-1">OR</p>
             </div>
-            <button
+            <Button
               onClick={signInWithGoogle}
-              className="flex items-center justify-center w-full bg-white text-[#de5246] rounded-lg p-1 my-3 border-[1px] border-[#de5246] "
+              variant="outline"
+              className="w-full"
+              size="lg"
             >
               <FcGoogle className="mr-2" />
               Sign In with Google
-            </button>
+            </Button>
           </div>
 
           <p className="text-xs font-thin text-[#060606]">

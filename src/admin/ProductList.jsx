@@ -9,6 +9,7 @@ import {
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDeleteProduct, useProducts } from '../queries/productQueries';
+import { Button } from '../components/ui/button';
 
 export default function ProductList() {
   const { data: products = [], isLoading, isError, error } = useProducts();
@@ -76,7 +77,7 @@ export default function ProductList() {
     <div className="h-[55vh] sm:h-[65vh]">
       <div className="flex justify-end m-4">
         <Link to="/products">
-          <button>Add +</button>
+          <Button>Add +</Button>
         </Link>
       </div>
       {isLoading && <div className="mx-4 mb-2 text-sm text-gray-600">Loading products...</div>}
